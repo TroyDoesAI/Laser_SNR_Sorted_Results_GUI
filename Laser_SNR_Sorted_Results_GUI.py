@@ -1,5 +1,24 @@
 import sys
 import json
+import subprocess
+
+# Check if required packages are installed, and install them if necessary
+def check_dependencies():
+    required_packages = ["PyQt5"]
+    installed_packages = subprocess.check_output([sys.executable, "-m", "pip", "list"]).decode("utf-8")
+    missing_packages = [package for package in required_packages if package not in installed_packages]
+
+    if missing_packages:
+        for package in missing_packages:
+            print(f"Installing {package}...")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+    else:
+        print("All required packages found.")
+
+# Check dependencies before running the application
+check_dependencies()
+
+
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QFileDialog, QListView, QTextEdit
 from PyQt5.QtCore import QAbstractListModel, Qt, QModelIndex
 
